@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tilt Head · Denotation vs Connotation · Grade 5</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DynaPuff:wght@400;600;700&family=Press+Start+2P&family=Comic+Neue:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+    <style>
+        /* ============================================================
+           COMPLETE STYLES - GITHUB READY
+           ============================================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #fce4ec 0%, #f8bbd0 50%, #f48fb1 100%);
+            font-family: 'Comic Neue', cursive;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            margin: 0;
+        }
+
+        .game-container {
+            max-width: 1300px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 60px;
+            padding: 20px 25px 30px;
+            box-shadow: 0 20px 40px rgba(233, 30, 99, 0.3), 0 0 0 3px #f06292;
+            position: relative;
+            border: 4px solid #ff80ab;
+        }
+
+        /* Typography */
+        .dynapuff {
+            font-family: 'DynaPuff', cursive;
+        }
+        .pressstart {
+            font-family: 'Press Start 2P', cursive;
+        }
+        .comic-neue {
+            font-family: 'Comic Neue', cursive;
+        }
+        h1,
+        h2,
+        h3 {
+            font-family: 'DynaPuff', cursive;
+            letter-spacing: 1px;
+        }
+
+        /* Screens */
+        .screen {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+        }
+        .screen.active {
+            display: flex;
+        }
+
+        /* ============================================================
+           GLOBAL SCOREBOARD - PINK THEME
+           ============================================================ */
+        .global-scoreboard {
+            display: flex;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 60px;
+            padding: 10px 20px;
+            margin-bottom: 14px;
+            color: #6a1b4d;
+            border: 3px solid #f06292;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.2);
+        }
+
+        .score-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .score-item .score-val {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.8rem;
+            background: #fce4ec;
+            padding: 0 18px;
+            border-radius: 40px;
+            color: #c2185b;
+            border: 2px solid #f06292;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .score-item.active-turn {
+            background: #f06292;
+            padding: 4px 18px;
+            border-radius: 60px;
+            color: white;
+            box-shadow: 0 0 20px #f06292;
+        }
+
+        .turn-indicator {
+            font-family: 'DynaPuff', cursive;
+            font-weight: 700;
+            background: #f06292;
+            padding: 4px 16px;
+            border-radius: 40px;
+            color: white;
+            box-shadow: 0 0 15px #f06292;
+        }
+
+        /* ============================================================
+           BUTTONS
+           ============================================================ */
+        .btn-primary {
+            background: #f06292;
+            border: none;
+            padding: 16px 48px;
+            border-radius: 80px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            font-family: 'DynaPuff', cursive;
+            box-shadow: 0 8px 0 #ad1457;
+            cursor: pointer;
+            transition: 0.08s linear;
+            border: 3px solid #ff80ab;
+            color: white;
+            margin: 10px;
+        }
+
+        .btn-primary:active {
+            transform: translateY(5px);
+            box-shadow: 0 2px 0 #ad1457;
+        }
+
+        .btn-primary:hover {
+            background: #f06292;
+            transform: scale(1.02);
+        }
+
+        .btn-secondary {
+            background: #f8bbd0;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 80px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            font-family: 'Comic Neue', cursive;
+            box-shadow: 0 6px 0 #ad1457;
+            cursor: pointer;
+            transition: 0.08s linear;
+            border: 2px solid #ff80ab;
+            color: #6a1b4d;
+            margin: 6px;
+        }
+
+        .btn-secondary:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #ad1457;
+        }
+
+        .btn-secondary:hover {
+            background: #f8bbd0;
+            transform: scale(1.02);
+        }
+
+        .btn-danger {
+            background: #e74c3c;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 80px;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: 'Comic Neue', cursive;
+            box-shadow: 0 6px 0 #922b21;
+            cursor: pointer;
+            transition: 0.08s linear;
+            border: 2px solid #fadbd8;
+            margin: 4px;
+            color: white;
+        }
+
+        .btn-danger:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #922b21;
+        }
+
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+
+        .flex-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ============================================================
+           CAMERA PAIR
+           ============================================================ */
+        .camera-pair {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 12px 0;
+        }
+
+        .camera-box {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 30px;
+            padding: 10px;
+            border: 4px solid #f06292;
+            box-shadow: 0 8px 0 #ad1457, 0 10px 25px rgba(233, 30, 99, 0.3);
+            flex: 1;
+            min-width: 180px;
+            max-width: 320px;
+            text-align: center;
+        }
+
+        .camera-box video {
+            width: 100%;
+            border-radius: 20px;
+            background: #fce4ec;
+            transform: scaleX(-1);
+            display: block;
+            border: 3px solid #ff80ab;
+        }
+
+        .cam-status {
+            color: #6a1b4d;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-top: 4px;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 4px 12px;
+            border-radius: 40px;
+        }
+
+        /* ============================================================
+           WELCOME SCREEN
+           ============================================================ */
+        #screenWelcome {
+            align-items: center;
+            justify-content: center;
+            min-height: 70vh;
+            text-align: center;
+            color: #6a1b4d;
+        }
+
+        #screenWelcome h1 {
+            font-size: 4.5rem;
+            text-shadow: 0 6px 0 #ad1457, 0 0 30px #f06292;
+            color: #fce4ec;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        #screenWelcome .sub {
+            font-size: 1.8rem;
+            color: #6a1b4d;
+            margin: 10px 0;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 8px 24px;
+            border-radius: 60px;
+        }
+
+        /* ============================================================
+           RULES SCREEN
+           ============================================================ */
+        #screenRules {
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+            color: #6a1b4d;
+        }
+
+        #screenRules .rules-card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 60px;
+            max-width: 700px;
+            border: 4px solid #f06292;
+            box-shadow: 0 8px 0 #ad1457;
+        }
+
+        #screenRules ul {
+            font-size: 1.2rem;
+            line-height: 2.2;
+            list-style: none;
+        }
+
+        #screenRules ul li::before {
+            content: "🌸 ";
+        }
+
+        /* ============================================================
+           GAME SCREEN
+           ============================================================ */
+        #screenGame {
+            gap: 12px;
+        }
+
+        .game-status {
+            color: #6a1b4d;
+            font-size: 1.3rem;
+            text-align: center;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 60px;
+            border: 3px solid #f06292;
+            font-weight: 700;
+        }
+
+        .timer-display {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 2.5rem;
+            text-align: center;
+            color: #c2185b;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 8px 20px;
+            border-radius: 60px;
+            border: 4px solid #f06292;
+            display: inline-block;
+            margin: 0 auto;
+            box-shadow: 0 4px 0 #ad1457;
+            min-width: 80px;
+        }
+
+        .timer-display.warning {
+            color: #e74c3c;
+            animation: pulse 0.5s infinite;
+            border-color: #e74c3c;
+        }
+
+        @keyframes pulse {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.3;
+            }
+        }
+
+        .question-display {
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 60px;
+            padding: 24px;
+            box-shadow: inset 0 -8px 0 #f06292, 0 8px 25px rgba(233, 30, 99, 0.2);
+            margin: 8px 0;
+            border: 3px solid #ff80ab;
+        }
+
+        .question-word {
+            font-size: 3.5rem;
+            font-family: 'DynaPuff', cursive;
+            text-align: center;
+            color: #6a1b4d;
+        }
+
+        .sentence-box {
+            background: #fce4ec;
+            padding: 18px;
+            border-radius: 50px;
+            font-size: 1.6rem;
+            text-align: center;
+            margin: 12px 0;
+            border: 3px dashed #f06292;
+            color: #6a1b4d;
+        }
+
+        .def-type {
+            display: inline-block;
+            background: #f8bbd0;
+            padding: 6px 24px;
+            border-radius: 60px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #6a1b4d;
+            border: 2px solid #f06292;
+        }
+
+        .tilt-instruction {
+            text-align: center;
+            font-size: 1.4rem;
+            color: #6a1b4d;
+            background: rgba(255, 255, 255, 0.85);
+            padding: 10px;
+            border-radius: 60px;
+            border: 3px solid #f06292;
+            margin: 8px 0;
+            font-weight: 700;
+        }
+
+        .answer-feedback {
+            text-align: center;
+            font-size: 1.8rem;
+            font-family: 'DynaPuff', cursive;
+            padding: 12px;
+            min-height: 60px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 40px;
+        }
+
+        .answer-feedback.correct {
+            color: #2e7d32;
+        }
+        .answer-feedback.wrong {
+            color: #c62828;
+        }
+        .answer-feedback.timeout {
+            color: #e65100;
+        }
+
+        /* Team Choice Display */
+        .team-choice-display {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 8px 0;
+            font-size: 1.2rem;
+            font-weight: 700;
+            flex-wrap: wrap;
+        }
+
+        .team-choice-display .choice-a {
+            color: #c2185b;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 4px 20px;
+            border-radius: 40px;
+            border: 2px solid #f06292;
+        }
+
+        .team-choice-display .choice-b {
+            color: #1a5276;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 4px 20px;
+            border-radius: 40px;
+            border: 2px solid #5dade2;
+        }
+
+        .choice-label {
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* Progress */
+        .progress-display {
+            text-align: center;
+            color: #6a1b4d;
+            font-size: 1.2rem;
+            padding: 6px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 40px;
+        }
+
+        /* ============================================================
+           SETTINGS SCREEN
+           ============================================================ */
+        #screenSettings {
+            max-height: 80vh;
+            overflow-y: auto;
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 40px;
+            padding: 20px;
+            color: #6a1b4d;
+            border: 4px solid #f06292;
+            box-shadow: 0 8px 0 #ad1457;
+        }
+
+        #screenSettings h2 {
+            color: #c2185b;
+            text-align: center;
+        }
+
+        .settings-item {
+            background: #fce4ec;
+            border-radius: 30px;
+            padding: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            border: 2px solid #f06292;
+        }
+
+        .settings-item input,
+        .settings-item select {
+            padding: 8px 14px;
+            border-radius: 40px;
+            border: 2px solid #f06292;
+            font-family: 'Comic Neue', cursive;
+            font-size: 1rem;
+            flex: 1;
+            min-width: 100px;
+            background: white;
+        }
+
+        .settings-item .q-label {
+            font-weight: 700;
+            min-width: 30px;
+            color: #c2185b;
+        }
+
+        .settings-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin: 16px 0;
+        }
+
+        .add-question-btn {
+            background: #f06292;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 60px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #ad1457;
+            border: 2px solid #ff80ab;
+            font-family: 'Comic Neue', cursive;
+        }
+
+        .add-question-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #ad1457;
+        }
+
+        .add-question-btn:hover {
+            background: #f06292;
+            transform: scale(1.02);
+        }
+
+        /* ============================================================
+           PODIUM SCREEN
+           ============================================================ */
+        #screenPodium {
+            align-items: center;
+            justify-content: center;
+            min-height: 70vh;
+            text-align: center;
+            color: #6a1b4d;
+        }
+
+        .podium-card {
+            background: rgba(255, 255, 255, 0.92);
+            border-radius: 80px;
+            padding: 40px;
+            border: 4px solid #f06292;
+            max-width: 600px;
+            box-shadow: 0 8px 0 #ad1457, 0 0 40px rgba(233, 30, 99, 0.3);
+            animation: popIn 0.6s ease;
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .podium-card img {
+            max-width: 200px;
+            border-radius: 40px;
+        }
+
+        /* ============================================================
+           AUDIO TOGGLE
+           ============================================================ */
+        .audio-toggle {
+            font-size: 1.2rem;
+            background: #fce4ec;
+            color: #6a1b4d;
+            border-radius: 40px;
+            padding: 4px 16px;
+            border: 2px solid #f06292;
+            cursor: pointer;
+            font-family: 'Comic Neue', cursive;
+            font-weight: 700;
+        }
+
+        .audio-toggle:hover {
+            background: #f8bbd0;
+        }
+
+        /* ============================================================
+           UTILITY
+           ============================================================ */
+        .hidden {
+            display: none !important;
+        }
+
+        /* ============================================================
+           RESPONSIVE
+           ============================================================ */
+        @media (max-width: 700px) {
+            .game-container {
+                padding: 12px 16px 20px;
+                border-radius: 40px;
+            }
+
+            #screenWelcome h1 {
+                font-size: 2.8rem;
+            }
+
+            #screenWelcome .sub {
+                font-size: 1.2rem;
+            }
+
+            .question-word {
+                font-size: 2.4rem;
+            }
+
+            .sentence-box {
+                font-size: 1.2rem;
+                padding: 12px;
+            }
+
+            .camera-box {
+                max-width: 100%;
+                min-width: 140px;
+            }
+
+            .btn-primary {
+                padding: 12px 28px;
+                font-size: 1.3rem;
+            }
+
+            .timer-display {
+                font-size: 1.8rem;
+                min-width: 60px;
+                padding: 4px 14px;
+            }
+
+            .global-scoreboard {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+
+            .score-item .score-val {
+                font-size: 1.4rem;
+                padding: 0 12px;
+            }
+
+            .team-choice-display {
+                gap: 16px;
+                font-size: 1rem;
+            }
+
+            .answer-feedback {
+                font-size: 1.3rem;
+                min-height: 50px;
+                padding: 8px;
+            }
+
+            .settings-item {
+                padding: 12px;
+            }
+
+            .settings-item input {
+                font-size: 0.9rem;
+                min-width: 70px;
+            }
+
+            .podium-card {
+                padding: 24px;
+            }
+
+            .podium-card img {
+                max-width: 120px;
+            }
+
+            #screenRules .rules-card {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .game-container {
+                padding: 10px 10px 16px;
+                border-radius: 30px;
+            }
+
+            #screenWelcome h1 {
+                font-size: 2.2rem;
+            }
+
+            .question-word {
+                font-size: 1.8rem;
+            }
+
+            .btn-primary {
+                padding: 10px 20px;
+                font-size: 1.1rem;
+                margin: 6px;
+            }
+
+            .btn-secondary {
+                padding: 8px 18px;
+                font-size: 1rem;
+            }
+
+            .camera-box {
+                min-width: 120px;
+                padding: 6px;
+            }
+
+            .camera-box video {
+                border-radius: 14px;
+            }
+
+            .global-scoreboard {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+
+            .score-item {
+                justify-content: center;
+            }
+
+            .turn-indicator {
+                text-align: center;
+                font-size: 0.9rem;
+            }
+
+            .timer-display {
+                font-size: 1.5rem;
+                min-width: 50px;
+            }
+
+            .team-choice-display {
+                flex-direction: column;
+                align-items: center;
+                gap: 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container" id="app">
+        <!-- Audio -->
+        <audio id="bgMusic" src="background music.mp3" loop></audio>
+        <audio id="sfxClick" src="click.wav"></audio>
+        <audio id="sfxAdd" src="add.wav"></audio>
+        <audio id="sfxMinus" src="minus.wav"></audio>
+        <audio id="sfxReveal" src="reveal.wav"></audio>
+        <audio id="sfxWinner" src="winner.mp3"></audio>
+        <audio id="sfxTick" src="tick.wav"></audio>
+        <audio id="sfxBuzz" src="buzz.wav"></audio>
+
+        <!-- Global Scoreboard -->
+        <div class="global-scoreboard" id="globalScoreboard">
+            <div class="score-item" id="teamAScoreWrap">
+                <span>🦁 Team A</span>
+                <span class="score-val" id="globalScoreA">0</span>
+            </div>
+            <div class="turn-indicator" id="turnIndicator">🌸 Both teams tilt!</div>
+            <div class="score-item" id="teamBScoreWrap">
+                <span>🐬 Team B</span>
+                <span class="score-val" id="globalScoreB">0</span>
+            </div>
+            <button class="audio-toggle" id="audioToggle">🔊</button>
+        </div>
+
+        <!-- WELCOME -->
+        <div id="screenWelcome" class="screen active">
+            <h1>🎯 TILT HEAD</h1>
+            <div class="sub">🌸 Denotation vs Connotation · Grade 5</div>
+            <div class="flex-row">
+                <button class="btn-primary" id="goToRules">📖 Rules</button>
+                <button class="btn-primary" id="goToGame">🚀 Play</button>
+                <button class="btn-secondary" id="goToSettings">⚙️ Edit Q's</button>
+            </div>
+            <div style="color:#6a1b4d; margin-top:12px; font-size:1.2rem; background:rgba(255,255,255,0.7); padding:8px 24px; border-radius:60px;">
+                📷 Tilt LEFT = Denotation · Tilt RIGHT = Connotation · Both teams play at once!
+            </div>
+        </div>
+
+        <!-- RULES -->
+        <div id="screenRules" class="screen">
+            <div class="rules-card">
+                <h2 style="color:#c2185b;">📜 How to Play</h2>
+                <ul style="color:#6a1b4d;">
+                    <li>🌸 A word and a sentence will appear.</li>
+                    <li>🌸 Decide if the sentence shows <strong>Denotation</strong> (dictionary meaning) or <strong>Connotation</strong> (feeling/association).</li>
+                    <li>🌸 <strong>Tilt LEFT</strong> → Denotation</li>
+                    <li>🌸 <strong>Tilt RIGHT</strong> → Connotation</li>
+                    <li>🌸 <strong>Both teams tilt simultaneously!</strong> The camera detects both heads.</li>
+                    <li>🌸 First correct tilt wins the point. Both can score if both are correct.</li>
+                    <li>🌸 You have <strong>15 seconds</strong> to answer!</li>
+                    <li>🌸 First team to <strong>10</strong> correct answers wins!</li>
+                </ul>
+                <button class="btn-primary" id="rulesBack" style="margin-top:20px;">← Back</button>
+            </div>
+        </div>
+
+        <!-- GAME -->
+        <div id="screenGame" class="screen">
+            <div class="camera-pair">
+                <div class="camera-box">
+                    <video id="videoA" autoplay playsinline></video>
+                    <div class="cam-status" id="camStatusA">🌸 Team A · loading...</div>
+                </div>
+                <div class="camera-box">
+                    <video id="videoB" autoplay playsinline></video>
+                    <div class="cam-status" id="camStatusB">🌸 Team B · loading...</div>
+                </div>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                <div class="timer-display" id="timerDisplay">15</div>
+                <div class="game-status" id="gameStatus">🎯 Both teams tilt to answer!</div>
+            </div>
+
+            <div class="question-display">
+                <div class="question-word" id="qWord">SNAKE</div>
+                <div class="sentence-box" id="qSentence">"That snake is dangerous."</div>
+                <div style="text-align:center; margin:6px 0;">
+                    <span class="def-type" id="qTypeLabel">❓ Denotation or Connotation?</span>
+                </div>
+            </div>
+
+            <div class="team-choice-display">
+                <span class="choice-a">🦁 Team A: <span id="teamAChoice">—</span></span>
+                <span class="choice-b">🐬 Team B: <span id="teamBChoice">—</span></span>
+            </div>
+
+            <div class="tilt-instruction">👈 Tilt LEFT = Denotation &nbsp;&nbsp;|&nbsp;&nbsp; Tilt RIGHT = Connotation 👉</div>
+            <div class="answer-feedback" id="answerFeedback">🌸 Both teams tilt simultaneously!</div>
+
+            <div class="progress-display" id="progressDisplay">🌸 Correct: 0 / 10</div>
+
+            <div class="flex-row">
+                <button class="btn-secondary" id="resetGameBtn">🔄 Reset Game</button>
+                <button class="btn-secondary" id="backToWelcomeBtn">🏠 Home</button>
+            </div>
+        </div>
+
+        <!-- SETTINGS -->
+        <div id="screenSettings" class="screen">
+            <h2>🌸 Edit Questions</h2>
+            <div style="text-align:center; margin:8px 0; color:#6a1b4d;">Add, edit, or remove questions. Changes save automatically.</div>
+            <div id="settingsList"></div>
+            <div class="settings-actions">
+                <button class="add-question-btn" id="addQuestionBtn">➕ Add Question</button>
+                <button class="btn-secondary" id="settingsBack">← Back</button>
+            </div>
+        </div>
+
+        <!-- PODIUM -->
+        <div id="screenPodium" class="screen">
+            <div class="podium-card">
+                <img src="winner.gif" alt="winner" id="winnerGif" />
+                <h2 id="winnerTitle" style="color:#c2185b; font-size:3rem;">🏆 Team A Wins!</h2>
+                <button class="btn-primary" id="playAgainBtn">🔄 PLAY AGAIN</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ============================================================
+            // 1. AUDIO SYSTEM
+            // ============================================================
+            const audio = {
+                bg: document.getElementById('bgMusic'),
+                click: document.getElementById('sfxClick'),
+                add: document.getElementById('sfxAdd'),
+                minus: document.getElementById('sfxMinus'),
+                reveal: document.getElementById('sfxReveal'),
+                winner: document.getElementById('sfxWinner'),
+                tick: document.getElementById('sfxTick'),
+                buzz: document.getElementById('sfxBuzz'),
+            };
+            let audioEnabled = true;
+            document.getElementById('audioToggle').addEventListener('click', () => {
+                audioEnabled = !audioEnabled;
+                document.getElementById('audioToggle').textContent = audioEnabled ? '🔊' : '🔇';
+                if (!audioEnabled) audio.bg.pause();
+                else audio.bg.play();
+            });
+
+            function playSFX(el) {
+                if (audioEnabled && el) { el.currentTime = 0;
+                    el.play().catch(() => {}); }
+            }
+
+            // ============================================================
+            // 2. QUESTION BANK (editable)
+            // ============================================================
+            let questionBank = [
+                { word: "SNAKE", sentence: "That snake is dangerous.", correct: "connotation" },
+                { word: "SNAKE", sentence: "A snake is a long legless reptile.", correct: "denotation" },
+                { word: "HOME", sentence: "Home is where the heart is.", correct: "connotation" },
+                { word: "HOME", sentence: "A home is a place where people live.", correct: "denotation" },
+                { word: "FOX", sentence: "She's as clever as a fox.", correct: "connotation" },
+                { word: "FOX", sentence: "A fox is a small wild animal.", correct: "denotation" },
+                { word: "STAR", sentence: "She's a rising star in Hollywood.", correct: "connotation" },
+                { word: "STAR", sentence: "A star is a bright object in the night sky.", correct: "denotation" },
+                { word: "LION", sentence: "He has the heart of a lion.", correct: "connotation" },
+                { word: "LION", sentence: "A lion is a large wild cat.", correct: "denotation" },
+                { word: "FIRE", sentence: "The fire in his eyes showed anger.", correct: "connotation" },
+                { word: "FIRE", sentence: "Fire produces heat and light.", correct: "denotation" },
+                { word: "DOVE", sentence: "She's a dove of peace.", correct: "connotation" },
+                { word: "DOVE", sentence: "A dove is a white bird.", correct: "denotation" },
+                { word: "CHAIN", sentence: "The chain of events led to disaster.", correct: "connotation" },
+                { word: "CHAIN", sentence: "A chain is a series of linked rings.", correct: "denotation" },
+                { word: "BLOOM", sentence: "Her talent began to bloom.", correct: "connotation" },
+                { word: "BLOOM", sentence: "A bloom is a flower.", correct: "denotation" },
+                { word: "SHADOW", sentence: "A shadow of doubt crossed his mind.", correct: "connotation" },
+                { word: "SHADOW", sentence: "A shadow is a dark area cast by an object.", correct: "denotation" }
+            ];
+
+            try {
+                const saved = localStorage.getItem('tiltHeadQuestions');
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    if (Array.isArray(parsed) && parsed.length > 0) {
+                        questionBank = parsed;
+                    }
+                }
+            } catch (e) {}
+
+            function saveQuestions() {
+                localStorage.setItem('tiltHeadQuestions', JSON.stringify(questionBank));
+            }
+
+            // ============================================================
+            // 3. STATE - SIMULTANEOUS MODE
+            // ============================================================
+            let gameQuestions = [];
+            let currentIndex = 0;
+            let scores = { A: 0, B: 0 };
+            let totalCorrect = 0;
+            const WIN_SCORE = 10;
+            let timerInterval = null;
+            let timeLeft = 15;
+            const MAX_TIME = 15;
+            let roundActive = true;
+            let roundEnded = false;
+
+            let teamAChosen = false;
+            let teamBChosen = false;
+            let teamAChoice = null; // 'denotation' or 'connotation'
+            let teamBChoice = null;
+            let correctAnswer = '';
+
+            // DOM refs
+            const qWord = document.getElementById('qWord');
+            const qSentence = document.getElementById('qSentence');
+            const qTypeLabel = document.getElementById('qTypeLabel');
+            const answerFeedback = document.getElementById('answerFeedback');
+            const gameStatus = document.getElementById('gameStatus');
+            const progressDisplay = document.getElementById('progressDisplay');
+            const timerDisplay = document.getElementById('timerDisplay');
+            const teamAChoiceSpan = document.getElementById('teamAChoice');
+            const teamBChoiceSpan = document.getElementById('teamBChoice');
+
+            const globalScoreA = document.getElementById('globalScoreA');
+            const globalScoreB = document.getElementById('globalScoreB');
+            const teamAScoreWrap = document.getElementById('teamAScoreWrap');
+            const teamBScoreWrap = document.getElementById('teamBScoreWrap');
+
+            // ============================================================
+            // 4. CAMERA + HEAD TILT DETECTION (2 heads simultaneous)
+            // ============================================================
+            let faceDetectionReadyA = false;
+            let faceDetectionReadyB = false;
+
+            const videoA = document.getElementById('videoA');
+            const videoB = document.getElementById('videoB');
+            const camStatusA = document.getElementById('camStatusA');
+            const camStatusB = document.getElementById('camStatusB');
+
+            function loadMediaPipe() {
+                const script1 = document.createElement('script');
+                script1.src = 'https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/face_detection.js';
+                script1.crossOrigin = 'anonymous';
+                document.head.appendChild(script1);
+
+                const script2 = document.createElement('script');
+                script2.src = 'https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js';
+                script2.crossOrigin = 'anonymous';
+                document.head.appendChild(script2);
+
+                let loaded = 0;
+                script1.onload = () => { loaded++; if (loaded === 2) initCameras(); };
+                script2.onload = () => { loaded++; if (loaded === 2) initCameras(); };
+
+                setTimeout(() => {
+                    if (!faceDetectionReadyA && !faceDetectionReadyB) {
+                        camStatusA.innerHTML = '⚠️ Camera failed. Use keyboard: ← →';
+                        camStatusB.innerHTML = '⚠️ Camera failed. Use keyboard: ← →';
+                    }
+                }, 10000);
+            }
+
+            function initCameras() {
+                if (typeof FaceDetection === 'undefined' || typeof Camera === 'undefined') {
+                    camStatusA.innerHTML = '⚠️ MediaPipe not loaded';
+                    camStatusB.innerHTML = '⚠️ MediaPipe not loaded';
+                    return;
+                }
+                initSingleCamera('videoA', 'camStatusA', 'A');
+                initSingleCamera('videoB', 'camStatusB', 'B');
+            }
+
+            function initSingleCamera(videoId, statusId, team) {
+                const video = document.getElementById(videoId);
+                const statusEl = document.getElementById(statusId);
+                const faceDetection = new FaceDetection({
+                    locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/${file}`
+                });
+                faceDetection.setOptions({
+                    model: 'short',
+                    minDetectionConfidence: 0.7
+                });
+
+                let lastDirection = 'none';
+                let cooldown = false;
+
+                faceDetection.onResults((results) => {
+                    if (results.detections && results.detections.length > 0) {
+                        const detection = results.detections[0];
+                        const landmarks = detection.landmarks;
+                        if (landmarks && landmarks.length > 0) {
+                            const leftEye = landmarks[0];
+                            const rightEye = landmarks[1];
+                            if (leftEye && rightEye) {
+                                const dx = rightEye.x - leftEye.x;
+                                const dy = rightEye.y - leftEye.y;
+                                let angle = Math.atan2(dy, dx) * 180 / Math.PI;
+                                const threshold = 10;
+                                let direction = 'none';
+                                if (angle < -threshold) direction = 'left';
+                                else if (angle > threshold) direction = 'right';
+
+                                if (direction !== lastDirection && direction !== 'none') {
+                                    lastDirection = direction;
+                                    if (roundActive && !roundEnded && !cooldown) {
+                                        cooldown = true;
+                                        setTimeout(() => { cooldown = false; }, 600);
+
+                                        // Map: left = denotation, right = connotation
+                                        const choice = (direction === 'left') ? 'denotation' : 'connotation';
+
+                                        // Each camera triggers its own team
+                                        if (team === 'A' && !teamAChosen) {
+                                            teamAChosen = true;
+                                            teamAChoice = choice;
+                                            teamAChoiceSpan.textContent = choice === 'denotation' ? '📘 Denotation' :
+                                                '💭 Connotation';
+                                            playSFX(audio.click);
+                                        } else if (team === 'B' && !teamBChosen) {
+                                            teamBChosen = true;
+                                            teamBChoice = choice;
+                                            teamBChoiceSpan.textContent = choice === 'denotation' ? '📘 Denotation' :
+                                            '💭 Connotation';
+                                            playSFX(audio.click);
+                                        }
+
+                                        if (teamAChosen && teamBChosen) {
+                                            resolveRound();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+
+                const camera = new Camera(video, {
+                    onFrame: async () => {
+                        await faceDetection.send({ image: video });
+                    },
+                    width: 320,
+                    height: 240
+                });
+                camera.start().then(() => {
+                    if (team === 'A') faceDetectionReadyA = true;
+                    else faceDetectionReadyB = true;
+                    statusEl.innerHTML = `🌸 Team ${team} ready · Tilt LEFT=Denotation RIGHT=Connotation`;
+                }).catch(err => {
+                    statusEl.innerHTML = `⚠️ Team ${team} camera error`;
+                    console.warn(`Camera ${team} error:`, err);
+                });
+            }
+
+            // ============================================================
+            // 5. TIMER
+            // ============================================================
+            function startTimer() {
+                timeLeft = MAX_TIME;
+                timerDisplay.textContent = timeLeft;
+                timerDisplay.classList.remove('warning');
+                clearInterval(timerInterval);
+                timerInterval = setInterval(() => {
+                    timeLeft--;
+                    timerDisplay.textContent = timeLeft;
+                    if (timeLeft <= 5) {
+                        timerDisplay.classList.add('warning');
+                        playSFX(audio.tick);
+                    }
+                    if (timeLeft <= 0) {
+                        clearInterval(timerInterval);
+                        handleTimeout();
+                    }
+                }, 1000);
+            }
+
+            function stopTimer() {
+                clearInterval(timerInterval);
+                timerDisplay.classList.remove('warning');
+            }
+
+            function handleTimeout() {
+                if (!roundActive || roundEnded) return;
+                roundActive = false;
+                roundEnded = true;
+                stopTimer();
+                answerFeedback.textContent = '⏰ Time\'s up! No points awarded.';
+                answerFeedback.className = 'answer-feedback timeout';
+                gameStatus.textContent = '⏰ Time ran out!';
+                playSFX(audio.buzz);
+                setTimeout(() => {
+                    nextRound();
+                }, 1500);
+            }
+
+            // ============================================================
+            // 6. GAME LOGIC - SIMULTANEOUS
+            // ============================================================
+            function shuffleArray(arr) {
+                for (let i = arr.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [arr[i], arr[j]] = [arr[j], arr[i]];
+                }
+                return arr;
+            }
+
+            function initGameQuestions() {
+                gameQuestions = shuffleArray([...questionBank]);
+                currentIndex = 0;
+                totalCorrect = 0;
+            }
+
+            function loadQuestion() {
+                if (currentIndex >= gameQuestions.length) {
+                    gameQuestions = shuffleArray([...questionBank]);
+                    currentIndex = 0;
+                }
+                const q = gameQuestions[currentIndex];
+                qWord.textContent = q.word;
+                qSentence.textContent = '"' + q.sentence + '"';
+                correctAnswer = q.correct; // 'denotation' or 'connotation'
+                qTypeLabel.textContent = '❓ Denotation or Connotation?';
+
+                roundActive = true;
+                roundEnded = false;
+                teamAChosen = false;
+                teamBChosen = false;
+                teamAChoice = null;
+                teamBChoice = null;
+                teamAChoiceSpan.textContent = '—';
+                teamBChoiceSpan.textContent = '—';
+
+                answerFeedback.textContent = '🌸 Both teams tilt simultaneously!';
+                answerFeedback.className = 'answer-feedback';
+                gameStatus.textContent = `🎯 ${q.word} — Tilt LEFT=Denotation RIGHT=Connotation`;
+                updateProgress();
+                startTimer();
+            }
+
+            function resolveRound() {
+                if (roundEnded || !roundActive) return;
+                roundEnded = true;
+                roundActive = false;
+                stopTimer();
+
+                const aCorrect = (teamAChoice === correctAnswer);
+                const bCorrect = (teamBChoice === correctAnswer);
+
+                let resultMsg = '';
+
+                if (aCorrect && bCorrect) {
+                    scores.A += 1;
+                    scores.B += 1;
+                    resultMsg = '🌸 Both teams are CORRECT! +1 each!';
+                    playSFX(audio.add);
+                } else if (aCorrect && !bCorrect) {
+                    scores.A += 1;
+                    resultMsg = '🦁 Team A is CORRECT! +1 point. Team B is wrong.';
+                    playSFX(audio.add);
+                } else if (!aCorrect && bCorrect) {
+                    scores.B += 1;
+                    resultMsg = '🐬 Team B is CORRECT! +1 point. Team A is wrong.';
+                    playSFX(audio.add);
+                } else {
+                    resultMsg = '❌ Both teams are wrong! The answer was ' + correctAnswer + '.';
+                    playSFX(audio.minus);
+                }
+
+                answerFeedback.textContent = resultMsg;
+                answerFeedback.className = 'answer-feedback ' + (aCorrect || bCorrect ? 'correct' : 'wrong');
+                gameStatus.textContent = `📊 ${resultMsg}`;
+
+                globalScoreA.textContent = scores.A;
+                globalScoreB.textContent = scores.B;
+
+                if (scores.A >= WIN_SCORE || scores.B >= WIN_SCORE) {
+                    setTimeout(() => { showPodium(); }, 1000);
+                    return;
+                }
+
+                setTimeout(() => {
+                    nextRound();
+                }, 1500);
+            }
+
+            function nextRound() {
+                currentIndex++;
+                roundEnded = false;
+                roundActive = true;
+                teamAChosen = false;
+                teamBChosen = false;
+                teamAChoice = null;
+                teamBChoice = null;
+                teamAChoiceSpan.textContent = '—';
+                teamBChoiceSpan.textContent = '—';
+                loadQuestion();
+                updateProgress();
+            }
+
+            function updateProgress() {
+                const correct = scores.A + scores.B;
+                progressDisplay.textContent = `🌸 Correct: ${correct} / ${WIN_SCORE} · Q${currentIndex+1}/${gameQuestions.length}`;
+            }
+
+            // ============================================================
+            // 7. PODIUM
+            // ============================================================
+            function showPodium() {
+                stopTimer();
+                audio.bg.pause();
+                playSFX(audio.winner);
+                const winner = scores.A >= scores.B ? 'Team A' : 'Team B';
+                document.getElementById('winnerTitle').textContent = `🏆 ${winner} Wins!`;
+                document.getElementById('winnerGif').src = 'winner.gif';
+                showScreen('screenPodium');
+            }
+
+            // ============================================================
+            // 8. SCREEN ROUTING
+            // ============================================================
+            function showScreen(id) {
+                document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+                document.getElementById(id).classList.add('active');
+            }
+
+            // ============================================================
+            // 9. SETTINGS
+            // ============================================================
+            function renderSettings() {
+                const container = document.getElementById('settingsList');
+                container.innerHTML = '';
+                questionBank.forEach((q, idx) => {
+                    const div = document.createElement('div');
+                    div.className = 'settings-item';
+                    div.innerHTML = `
+                        <span class="q-label">#${idx+1}</span>
+                        <input type="text" value="${q.word}" data-field="word" data-idx="${idx}" placeholder="Word" style="max-width:100px;" />
+                        <input type="text" value="${q.sentence}" data-field="sentence" data-idx="${idx}" placeholder="Sentence" style="flex:2; min-width:150px;" />
+                        <select data-field="correct" data-idx="${idx}">
+                            <option value="denotation" ${q.correct==='denotation'?'selected':''}>Denotation</option>
+                            <option value="connotation" ${q.correct==='connotation'?'selected':''}>Connotation</option>
+                        </select>
+                        <button class="btn-danger" data-idx="${idx}" style="padding:6px 16px; font-size:0.9rem;">✕</button>
+                    `;
+                    container.appendChild(div);
+
+                    div.querySelectorAll('input, select').forEach(el => {
+                        el.addEventListener('change', function() {
+                            const idx2 = parseInt(this.dataset.idx);
+                            const field = this.dataset.field;
+                            if (field) {
+                                questionBank[idx2][field] = this.value;
+                                saveQuestions();
+                            }
+                        });
+                    });
+
+                    div.querySelector('.btn-danger').addEventListener('click', function() {
+                        const idx2 = parseInt(this.dataset.idx);
+                        if (questionBank.length <= 1) {
+                            alert('You need at least 1 question!');
+                            return;
+                        }
+                        if (confirm(`Delete question #${idx2+1}?`)) {
+                            questionBank.splice(idx2, 1);
+                            saveQuestions();
+                            renderSettings();
+                        }
+                    });
+                });
+            }
+
+            document.getElementById('addQuestionBtn').addEventListener('click', () => {
+                questionBank.push({
+                    word: "NEW",
+                    sentence: "Add a sentence here.",
+                    correct: "denotation"
+                });
+                saveQuestions();
+                renderSettings();
+                playSFX(audio.click);
+            });
+
+            // ============================================================
+            // 10. RESET
+            // ============================================================
+            function resetGame() {
+                stopTimer();
+                scores = { A: 0, B: 0 };
+                totalCorrect = 0;
+                roundActive = true;
+                roundEnded = false;
+                teamAChosen = false;
+                teamBChosen = false;
+                teamAChoice = null;
+                teamBChoice = null;
+                teamAChoiceSpan.textContent = '—';
+                teamBChoiceSpan.textContent = '—';
+                globalScoreA.textContent = '0';
+                globalScoreB.textContent = '0';
+                initGameQuestions();
+                loadQuestion();
+                updateProgress();
+                audio.bg.play();
+                showScreen('screenGame');
+            }
+
+            // ============================================================
+            // 11. NAVIGATION
+            // ============================================================
+            document.getElementById('goToRules').addEventListener('click', () => {
+                showScreen('screenRules');
+                playSFX(audio.click);
+            });
+            document.getElementById('rulesBack').addEventListener('click', () => {
+                showScreen('screenWelcome');
+                playSFX(audio.click);
+            });
+            document.getElementById('goToGame').addEventListener('click', () => {
+                resetGame();
+                playSFX(audio.click);
+            });
+            document.getElementById('goToSettings').addEventListener('click', () => {
+                renderSettings();
+                showScreen('screenSettings');
+                playSFX(audio.click);
+            });
+            document.getElementById('settingsBack').addEventListener('click', () => {
+                showScreen('screenWelcome');
+                playSFX(audio.click);
+            });
+            document.getElementById('backToWelcomeBtn').addEventListener('click', () => {
+                stopTimer();
+                audio.bg.pause();
+                showScreen('screenWelcome');
+                playSFX(audio.click);
+            });
+            document.getElementById('resetGameBtn').addEventListener('click', () => {
+                resetGame();
+                playSFX(audio.click);
+            });
+            document.getElementById('playAgainBtn').addEventListener('click', () => {
+                resetGame();
+                playSFX(audio.click);
+            });
+
+            // ============================================================
+            // 12. KEYBOARD FALLBACK (for testing)
+            // ============================================================
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
+                    if (roundActive && !roundEnded && !teamAChosen) {
+                        teamAChosen = true;
+                        teamAChoice = 'denotation';
+                        teamAChoiceSpan.textContent = '📘 Denotation';
+                        playSFX(audio.click);
+                        if (teamAChosen && teamBChosen) resolveRound();
+                    }
+                } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
+                    if (roundActive && !roundEnded && !teamBChosen) {
+                        teamBChosen = true;
+                        teamBChoice = 'connotation';
+                        teamBChoiceSpan.textContent = '💭 Connotation';
+                        playSFX(audio.click);
+                        if (teamAChosen && teamBChosen) resolveRound();
+                    }
+                }
+            });
+
+            // ============================================================
+            // 13. INIT
+            // ============================================================
+            initGameQuestions();
+            loadQuestion();
+            updateProgress();
+            showScreen('screenWelcome');
+            setTimeout(loadMediaPipe, 400);
+            audio.bg.volume = 0.4;
+        })();
+    </script>
+</body>
+</html>
